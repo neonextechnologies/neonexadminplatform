@@ -168,7 +168,7 @@ class MenuService implements MenuServiceContract
     }
 
     /**
-     * Reorder items by array of IDs
+     * Reorder items by array of IDs (audit-first)
      */
     public function reorderItems(array $orderedIds): void
     {
@@ -178,11 +178,12 @@ class MenuService implements MenuServiceContract
                 ->update(['sort_order' => $order]);
         }
 
+        audit()->record('menu.items.reordered', ['ids' => $orderedIds]);
         $this->clearCache();
     }
 
     /**
-     * Move item up (decrease sort_order)
+     * Move item up (decrease sort_order) — audit-first
      */
     public function moveUp(MenuItem $item): void
     {
@@ -197,12 +198,14 @@ class MenuService implements MenuServiceContract
             $tempOrder = $item->sort_order;
             $item->update(['sort_order' => $sibling->sort_order]);
             $sibling->update(['sort_order' => $tempOrder]);
+
+            audit()->record('menu.item.moved_up', $item);
             $this->clearCache($item->tenant_id);
         }
     }
 
     /**
-     * Move item down (increase sort_order)
+     * Move item down (increase sort_order) — audit-first
      */
     public function moveDown(MenuItem $item): void
     {
@@ -217,6 +220,8 @@ class MenuService implements MenuServiceContract
             $tempOrder = $item->sort_order;
             $item->update(['sort_order' => $sibling->sort_order]);
             $sibling->update(['sort_order' => $tempOrder]);
+
+            audit()->record('menu.item.moved_down', $item);
             $this->clearCache($item->tenant_id);
         }
     }
