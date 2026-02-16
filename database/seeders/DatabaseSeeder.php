@@ -17,11 +17,12 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        // Phase 2: RBAC seeders (registry-first: permissions MUST be seeded first)
+        // Phase 2-4: Kernel seeders
         $this->call([
-            PermissionSeeder::class,  // Registry-first: Register permissions
-            RoleSeeder::class,         // Create roles + assign permissions
-            UserSeeder::class,         // Create users + assign roles
+            PermissionSeeder::class,  // Phase 2: Registry-first - Register permissions
+            RoleSeeder::class,         // Phase 2: Create roles + assign permissions
+            UserSeeder::class,         // Phase 2: Create users + assign roles
+            SettingSeeder::class,      // Phase 4: Seed default settings (audit-first)
         ]);
     }
 }

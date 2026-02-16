@@ -107,3 +107,21 @@ if (!function_exists('audit')) {
         return app('audit');
     }
 }
+
+if (!function_exists('setting')) {
+    /**
+     * Get setting service instance
+     * 
+     * Phase 4: Tenant-aware settings with cache-first pattern
+     * 
+     * Usage:
+     *   setting()->get('app', 'site_name', 'Default')
+     *   setting()->set('app', 'site_name', 'My Site')
+     *
+     * @return \App\Services\SettingService
+     */
+    function setting(): \App\Services\SettingService
+    {
+        return app('setting');
+    }
+}

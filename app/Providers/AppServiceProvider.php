@@ -6,6 +6,7 @@ use App\Contracts\AuditContract;
 use App\Contracts\PermissionRegistryContract;
 use App\Services\AuditService;
 use App\Services\PermissionRegistry;
+use App\Services\SettingService;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -26,6 +27,12 @@ class AppServiceProvider extends ServiceProvider
             return new AuditService();
         });
         $this->app->alias(AuditContract::class, 'audit');
+
+        // Phase 4: Register SettingService (tenant-aware, cache-first)
+        $this->app->singleton(SettingService::class, function ($app) {
+            return new SettingService();
+        });
+        $this->app->alias(SettingService::class, 'setting');
     }
 
     /**

@@ -48,6 +48,13 @@ Route::middleware('auth')->group(function () {
     })->name('test.phase3');
 });
 
+// Phase 4 Test Summary
+Route::middleware('auth')->group(function () {
+    Route::get('/_test-phase4', function () {
+        return view('test-phase4');
+    })->name('test.phase4');
+});
+
 // Dashboard placeholder (Phase 6)
 Route::middleware('auth')->group(function () {
     Route::get('/dashboard', function () {
