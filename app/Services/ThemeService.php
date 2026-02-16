@@ -88,13 +88,15 @@ class ThemeService
 
     /**
      * Get theme view path
+     * 
+     * Uses the 'theme::' namespace registered in ThemeServiceProvider
+     * which resolves to resources/themes/{activeTheme}/
      *
      * @param string $view
      * @return string
      */
     public function view(string $view): string
     {
-        $theme = $this->getActiveTheme();
-        return "themes.{$theme}.{$view}";
+        return "theme::{$view}";
     }
 }

@@ -41,6 +41,9 @@ class ThemeServiceProvider extends ServiceProvider
 
         // Register Blade directives (optional, for later)
         $this->registerBladeDirectives();
+
+        // Phase 8.0: Register component namespaces (<x-limitless::card> etc.)
+        $this->registerComponentNamespaces();
     }
 
     /**
@@ -83,5 +86,15 @@ class ThemeServiceProvider extends ServiceProvider
         Blade::directive('themeAssets', function ($type = 'css') {
             return "<?php echo render_theme_assets({$type}); ?>";
         });
+    }
+
+    /**
+     * Register Blade component namespaces (Phase 8.0)
+     * 
+     * Maps <x-limitless::card> → resources/views/components/limitless/card.blade.php
+     */
+    protected function registerComponentNamespaces(): void
+    {
+        Blade::anonymousComponentPath(resource_path('views/components/limitless'), 'limitless');
     }
 }

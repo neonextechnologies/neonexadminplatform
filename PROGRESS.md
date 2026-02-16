@@ -324,7 +324,59 @@
 
 ---
 
-## 🔜 Next Phases (Layer B)
+### Phase 8: Menu Builder + Template Integration (Layer B) ✅
+**Status:** Complete  
+**Commit:** [Pending] | **Tag:** v0.8.0-phase8  
+**Date:** February 16, 2026
+
+#### Phase 8.0: Template Integration Gate (Layer B Kickoff)
+- ✅ Limitless theme layouts created (app, auth, header, sidebar, footer)
+- ✅ Theme adapter works (theme:: namespace, theme_view, theme_asset)
+- ✅ Blade components: `<x-limitless::card>`, `<x-limitless::modal>`, `<x-limitless::form-group>`
+- ✅ Component namespace registered via anonymousComponentPath
+- ✅ Per-page assets (@stack) + action router still work
+- ✅ Harness pages migrated to Limitless layout
+
+#### Phase 8.1: Menu Database + Data Source
+- ✅ menu_groups table (tenant_id, name, slug, position, sort_order, is_active)
+- ✅ menu_items table (tenant_id, menu_group_id, parent_id, title, type, url, route_name, icon, permission, sort_order)
+- ✅ MenuGroup model with scopes (forTenant, byPosition, active)
+- ✅ MenuItem model with relations (parent, children, group) + toTreeArray()
+- ✅ MenuServiceContract interface
+- ✅ MenuService with cache-first pattern (10min TTL)
+
+#### Phase 8.2: Theme Integration (Dynamic Sidebar)
+- ✅ Sidebar renders menu tree from DB (tenant-aware)
+- ✅ Recursive sidebar-tree partial (supports unlimited nesting)
+- ✅ Permission-based visibility (checks user canDo)
+- ✅ Fallback static menu when no DB data
+
+#### Phase 8.3: Admin Builder UI (Blade SSR)
+- ✅ MenuController with full CRUD (groups + items)
+- ✅ 3-column layout: Groups | Items | Edit Form
+- ✅ Create group modal
+- ✅ Create/edit item modals
+- ✅ jQuery AJAX delete (action router)
+- ✅ No Inertia/Vue (pure Blade SSR)
+
+#### Phase 8.4: Reorder + Cache
+- ✅ Move up/down buttons (swap sort_order)
+- ✅ Cache invalidation on every mutation
+- ✅ Manual "Clear Cache" button
+
+#### Permissions Registered (4)
+- menu.view, menu.create, menu.update, menu.delete
+
+#### Seeded Menu Items (7)
+- Main (divider), Dashboard, Users, Content (divider), Products, Administration (divider), Menu Builder
+
+**Test URL:** http://neonexadminplatform.test/dashboard  
+**Menu Builder:** http://neonexadminplatform.test/admin/menu  
+**Test Page:** http://neonexadminplatform.test/_test-phase8
+
+---
+
+## 🔜 Next Phases
 
 ### Recommended Order:
 1. ✅ Phase 0 - Platform Skeleton + UI Shell
@@ -335,33 +387,36 @@
 6. ✅ Phase 5 - Tenant Resolver
 7. ✅ Phase 6 - Dashboard
 8. ✅ Phase 7 - CRUD Generator
-9. 🔜 Phase 8 - Menu Builder (Layer B kickoff)
+9. ✅ Phase 8 - Menu Builder + Template Integration (Layer B)
+10. 🔜 Phase 9 - Media Manager
 
 ---
 
 ## 🧪 Testing
 
-### Quick Links
+### Quick Links (Domain-based tenant: neonexadminplatform.test)
 - **Login:** http://neonexadminplatform.test/login
 - **Register:** http://neonexadminplatform.test/register
-- **Dashboard:** http://neonexadminplatform.test/t/default/dashboard
-- **Users List:** http://neonexadminplatform.test/t/default/users
-- **Products List:** http://neonexadminplatform.test/t/default/admin/product
+- **Dashboard:** http://neonexadminplatform.test/dashboard
+- **Users List:** http://neonexadminplatform.test/users
+- **Products List:** http://neonexadminplatform.test/admin/product
+- **Menu Builder:** http://neonexadminplatform.test/admin/menu
 - **Phase 0 Test:** http://neonexadminplatform.test/_shell
 - **Phase 1 Test:** http://neonexadminplatform.test/_test-phase1
 - **Phase 2 Test:** http://neonexadminplatform.test/_test-phase2
-- **Phase 3 Test:** http://neonexadminplatform.test/t/default/_test-phase3
-- **Phase 4 Test:** http://neonexadminplatform.test/t/default/_test-phase4
-- **Phase 5 Test:** http://neonexadminplatform.test/t/default/_test-phase5
-- **Phase 6 Test:** http://neonexadminplatform.test/t/default/_test-phase6
-- **Phase 7 Test:** http://neonexadminplatform.test/t/default/_test-phase7
+- **Phase 3 Test:** http://neonexadminplatform.test/_test-phase3
+- **Phase 4 Test:** http://neonexadminplatform.test/_test-phase4
+- **Phase 5 Test:** http://neonexadminplatform.test/_test-phase5
+- **Phase 6 Test:** http://neonexadminplatform.test/_test-phase6
+- **Phase 7 Test:** http://neonexadminplatform.test/_test-phase7
+- **Phase 8 Test:** http://neonexadminplatform.test/_test-phase8
 
 ### Test Accounts
 ```bash
 # Admin (Full Access)
 Email: admin@example.com
 Password: password
-Permissions: 10 (all)
+Permissions: 18 (all)
 
 # User (Limited Access)
 Email: user@example.com
@@ -373,12 +428,12 @@ Permissions: 3 (auth + users.view only)
 
 ## 🏗️ Architecture Highlights
 
-### Layer A Compliance ✅
-- ❌ No component library (plain Bootstrap markup only)
-- ❌ No DataTables (deferred to Phase 8 / Layer C)
-- ✅ Plain Bootstrap + jQuery action router
+### Layer B Active (Phase 8+) ✅
+- ✅ Limitless theme integrated (APP_THEME=limitless)
+- ✅ `<x-limitless::card>`, `<x-limitless::modal>`, `<x-limitless::form-group>`
+- ✅ Plain Bootstrap + jQuery action router still standard
 - ✅ SSR Blade templates
-- ✅ CDN-first assets (no npm build)
+- ✅ Local assets for Limitless, CDN for icons (backward compat)
 
 ### Core Principles
 - ✅ **Registry-first:** Permissions centrally managed via PermissionRegistry

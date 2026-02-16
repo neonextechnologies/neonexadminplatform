@@ -11,6 +11,7 @@
 /storage/framework/views/*
 /vendor
 /themes/limitless
+/public/themes/limitless
 .env
 .env.backup
 .env.production

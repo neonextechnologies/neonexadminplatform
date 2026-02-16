@@ -57,16 +57,18 @@ class TenantSeeder extends Seeder
             $this->command->info('  ✅ Created domain: /t/default (path-based)');
         }
 
-        // Create tenant domain for full domain (optional, for production)
-        // Uncomment if you have a custom domain
-        // $domainEntry = TenantDomain::firstOrCreate(
-        //     ['domain' => 'neonexadminplatform.test'],
-        //     [
-        //         'tenant_id' => $defaultTenant->id,
-        //         'subdomain' => null,
-        //         'path' => null,
-        //     ]
-        // );
+        // Create tenant domain for full domain (Laragon development)
+        $domainEntry = TenantDomain::firstOrCreate(
+            ['domain' => 'neonexadminplatform.test'],
+            [
+                'tenant_id' => $defaultTenant->id,
+                'subdomain' => null,
+                'path' => null,
+            ]
+        );
+        if ($domainEntry->wasRecentlyCreated) {
+            $this->command->info('  ✅ Created domain: neonexadminplatform.test (full domain)');
+        }
 
         // Associate all existing users with default tenant
         $users = User::all();

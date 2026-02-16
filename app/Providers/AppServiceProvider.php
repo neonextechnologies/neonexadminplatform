@@ -3,9 +3,11 @@
 namespace App\Providers;
 
 use App\Contracts\AuditContract;
+use App\Contracts\Menu\MenuServiceContract;
 use App\Contracts\PermissionRegistryContract;
 use App\Contracts\TenantContract;
 use App\Services\AuditService;
+use App\Services\MenuService;
 use App\Services\PermissionRegistry;
 use App\Services\SettingService;
 use App\Services\TenantService;
@@ -41,6 +43,12 @@ class AppServiceProvider extends ServiceProvider
             return new TenantService();
         });
         $this->app->alias(TenantContract::class, 'tenant');
+
+        // Phase 8: Register MenuService (menu builder)
+        $this->app->singleton(MenuServiceContract::class, function ($app) {
+            return new MenuService();
+        });
+        $this->app->alias(MenuServiceContract::class, 'menu');
     }
 
     /**

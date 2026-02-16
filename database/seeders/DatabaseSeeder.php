@@ -25,6 +25,7 @@ class DatabaseSeeder extends Seeder
             SettingSeeder::class,      // Phase 4: Seed default settings (audit-first)
             TenantSeeder::class,       // Phase 5: Seed tenants + domains (audit-first)
             ProductSeeder::class,      // Phase 7: Sample products for CRUD generator
+            MenuSeeder::class,         // Phase 8: Default menu structure
         ]);
     }
 }

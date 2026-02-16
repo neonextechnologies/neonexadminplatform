@@ -197,7 +197,7 @@
                 </div>
                 <div class="card-body">
                     @php
-                        $recentLogs = AuditLog::where('tenant_id', $tenantId)
+                        $recentLogs = \App\Models\AuditLog::where('tenant_id', tenant_id())
                             ->orderBy('created_at', 'desc')
                             ->limit(10)
                             ->get();

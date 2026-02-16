@@ -58,26 +58,34 @@ return [
 
         'limitless' => [
             'name' => 'Limitless Admin',
-            'description' => 'Limitless Admin Template (Local)',
-            'version' => '1.0.0',
+            'description' => 'Limitless Admin Template (Phase 8.0 Layer B)',
+            'version' => '4.0.0',
             'author' => 'Kopyov',
             'assets' => [
                 'css' => [
-                    // jQuery CDN (Limitless dependency)
-                    'https://code.jquery.com/jquery-3.6.1.min.js',
-                    // Bootstrap 5 CDN
-                    'https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css',
-                    // Limitless CSS (local)
-                    '/themes/limitless/css/limitless.min.css',
-                    // Custom CSS
-                    '/css/app.css',
+                    // Limitless font
+                    '/themes/limitless/assets/fonts/db/db.css',
+                    // Icon packs (Limitless uses Phosphor, Icomoon, FontAwesome, Material)
+                    '/themes/limitless/assets/icons/phosphor/styles.min.css',
+                    '/themes/limitless/assets/icons/icomoon/styles.min.css',
+                    '/themes/limitless/assets/icons/fontawesome/styles.min.css',
+                    '/themes/limitless/assets/icons/material/styles.min.css',
+                    // Bootstrap Icons (for backward compat with Layer A views)
+                    'https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css',
+                    // Limitless main CSS (LTR)
+                    '/themes/limitless/assets/css/ltr/all.min.css',
                 ],
                 'js' => [
-                    // Bootstrap JS Bundle CDN
-                    'https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js',
-                    // Limitless JS (local)
-                    '/themes/limitless/js/limitless.min.js',
-                    // Action Router (Phase 0A)
+                    // jQuery (from Limitless local)
+                    '/themes/limitless/assets/js/jquery/jquery.min.js',
+                    // Bootstrap JS Bundle (from Limitless local)
+                    '/themes/limitless/assets/js/bootstrap/bootstrap.bundle.min.js',
+                    // Limitless core app JS
+                    '/themes/limitless/assets/js/app.js',
+                    // Notification libraries (Limitless)
+                    '/themes/limitless/assets/js/vendor/notifications/noty.min.js',
+                    '/themes/limitless/assets/js/vendor/notifications/sweet_alert.min.js',
+                    // Action Router (Phase 0A - our custom)
                     '/js/app.js',
                 ],
             ],
