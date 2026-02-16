@@ -31,4 +31,6 @@
 2) ห้าม `<x-limitless::...>` และห้าม DataTables baseline (จนกว่าจะถึง Phase 8.0 / Layer B)
 3) UI ใช้ plain Bootstrap (SSR Blade) + jQuery action router (`data-action`) เท่านั้น
 4) ต้อง tenant-safe + registry-first RBAC + audit-first ตามกติกา
-5)Output ต้องบอก Exit criteria ของ Phase นี้ว่าผ่านอะไรแล้วบ้าง
+5) Output ต้องบอก Exit criteria ของ Phase นี้ว่าผ่านอะไรแล้วบ้าง
+6) ห้าม component library
+7) ต้อง registry-first + audit-first

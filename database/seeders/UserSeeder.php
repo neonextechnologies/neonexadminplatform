@@ -21,10 +21,11 @@ class UserSeeder extends Seeder
      */
     public function run(): void
     {
-        // Create admin user if not exists
+        // Phase 3: Create admin user with tenant_id
         $admin = User::firstOrCreate(
-            ['email' => 'admin@example.com'],
+            ['email' => 'admin@example.com', 'tenant_id' => 1],
             [
+                'tenant_id' => 1, // Phase 3: tenant-safe
                 'name' => 'Admin User',
                 'password' => Hash::make('password'),
                 'email_verified_at' => now(),
@@ -57,10 +58,11 @@ class UserSeeder extends Seeder
             ]);
         }
 
-        // Create test user if not exists
+        // Phase 3: Create test user with tenant_id
         $testUser = User::firstOrCreate(
-            ['email' => 'user@example.com'],
+            ['email' => 'user@example.com', 'tenant_id' => 1],
             [
+                'tenant_id' => 1, // Phase 3: tenant-safe
                 'name' => 'Test User',
                 'password' => Hash::make('password'),
                 'email_verified_at' => now(),

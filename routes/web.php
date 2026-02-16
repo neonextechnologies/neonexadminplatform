@@ -41,6 +41,13 @@ Route::middleware('auth')->group(function () {
     })->middleware('permission:{permission}')->name('test.permission');
 });
 
+// Phase 3 Test Summary
+Route::middleware('auth')->group(function () {
+    Route::get('/_test-phase3', function () {
+        return view('test-phase3');
+    })->name('test.phase3');
+});
+
 // Dashboard placeholder (Phase 6)
 Route::middleware('auth')->group(function () {
     Route::get('/dashboard', function () {
@@ -50,3 +57,37 @@ Route::middleware('auth')->group(function () {
 
 // Auth routes (Phase 1)
 require __DIR__.'/auth.php';
+
+// Users CRUD (Phase 3)
+// Note: tenant.selected middleware will be added in Phase 5
+Route::middleware(['auth'])->prefix('users')->name('users.')->group(function () {
+    // Index: requires users.view permission
+    Route::get('/', [App\Http\Controllers\UserController::class, 'index'])
+        ->middleware('permission:users.view')
+        ->name('index');
+
+    // Create: requires users.create permission
+    Route::get('/create', [App\Http\Controllers\UserController::class, 'create'])
+        ->middleware('permission:users.create')
+        ->name('create');
+
+    // Store: requires users.create permission
+    Route::post('/', [App\Http\Controllers\UserController::class, 'store'])
+        ->middleware('permission:users.create')
+        ->name('store');
+
+    // Edit: requires users.update permission
+    Route::get('/{user}/edit', [App\Http\Controllers\UserController::class, 'edit'])
+        ->middleware('permission:users.update')
+        ->name('edit');
+
+    // Update: requires users.update permission
+    Route::put('/{user}', [App\Http\Controllers\UserController::class, 'update'])
+        ->middleware('permission:users.update')
+        ->name('update');
+
+    // Delete: requires users.delete permission
+    Route::delete('/{user}', [App\Http\Controllers\UserController::class, 'destroy'])
+        ->middleware('permission:users.delete')
+        ->name('destroy');
+});

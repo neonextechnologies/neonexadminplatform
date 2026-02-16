@@ -93,3 +93,17 @@ if (!function_exists('has_permission')) {
         return auth()->check();
     }
 }
+
+if (!function_exists('audit')) {
+    /**
+     * Get audit service instance
+     * 
+     * Phase 3: Full AuditService implementation
+     *
+     * @return \App\Contracts\AuditContract
+     */
+    function audit(): \App\Contracts\AuditContract
+    {
+        return app('audit');
+    }
+}

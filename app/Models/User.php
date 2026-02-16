@@ -36,6 +36,7 @@ class User extends Authenticatable
      * @var list<string>
      */
     protected $fillable = [
+        'tenant_id', // Phase 3: multi-tenancy support
         'name',
         'email',
         'password',
