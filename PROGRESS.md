@@ -118,15 +118,53 @@
 
 ---
 
+### Phase 3: User Management (CRUD baseline) ✅
+**Status:** Complete  
+**Commit:** [140abc5] | **Tag:** v0.3.0-phase3  
+**Date:** February 16, 2026
+
+#### Audit System (Audit-first)
+- ✅ audit_logs table migration
+- ✅ AuditLog model
+- ✅ AuditService (implements AuditContract)
+- ✅ audit() helper function
+- ✅ Full audit logging on create/update/delete
+
+#### Tenant Safety
+- ✅ Added tenant_id to users table
+- ✅ Email unique per tenant (composite: tenant_id + email)
+- ✅ All queries scoped by tenant_id
+- ✅ All creates set tenant_id
+- ✅ All edits/deletes check tenant ownership
+
+#### Users CRUD
+- ✅ UserController (index, create, store, edit, update, destroy)
+- ✅ Permission-guarded routes (users.view, users.create, users.update, users.delete)
+- ✅ Tenant-scoped queries
+- ✅ Audit logging on all operations
+
+#### UI (Plain Bootstrap - Layer A Compliant)
+- ✅ users/index.blade.php (list with plain table)
+- ✅ users/create.blade.php (form)
+- ✅ users/edit.blade.php (form)
+- ✅ jQuery Action Router for delete (AJAX)
+- ✅ NO component library
+- ✅ NO DataTables
+
+**Test URL:** http://neonexadminplatform.test/_test-phase3  
+**Users List:** http://neonexadminplatform.test/users
+
+---
+
 ## 🔜 Next Phases (Layer A)
 
 ### Recommended Order (Tenant-first + Registry-first):
 1. ✅ Phase 0 - Platform Skeleton + UI Shell
 2. ✅ Phase 1 - Authentication
 3. ✅ Phase 2 - RBAC
-4. 🔜 Phase 5 - Tenant Resolver (tenant_id() helper)
-5. 🔜 Phase 4 - Settings Service (tenant-aware)
-6. 🔜 Phase 3 - Users CRUD (tenant + permission + audit)
+4. ✅ Phase 3 - Users CRUD
+5. 🔜 Phase 5 - Tenant Resolver (tenant_id() helper + middleware)
+6. 🔜 Phase 4 - Settings Service (tenant-aware)
 7. 🔜 Phase 6 - Dashboard
 8. 🔜 Phase 7 - CRUD Generator
 
@@ -138,9 +176,11 @@
 - **Login:** http://neonexadminplatform.test/login
 - **Register:** http://neonexadminplatform.test/register
 - **Dashboard:** http://neonexadminplatform.test/dashboard
+- **Users List:** http://neonexadminplatform.test/users
 - **Phase 0 Test:** http://neonexadminplatform.test/_shell
 - **Phase 1 Test:** http://neonexadminplatform.test/_test-phase1
 - **Phase 2 Test:** http://neonexadminplatform.test/_test-phase2
+- **Phase 3 Test:** http://neonexadminplatform.test/_test-phase3
 
 ### Test Accounts
 ```bash
