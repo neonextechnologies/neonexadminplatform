@@ -245,6 +245,38 @@
 
 ---
 
+### Phase 6: Dashboard ✅
+**Status:** Complete  
+**Commit:** [Pending] | **Tag:** v0.6.0-phase6  
+**Date:** February 16, 2026
+
+#### Dashboard Features
+- ✅ DashboardController (tenant-scoped stats)
+- ✅ Tenant-scoped stats (users, settings, audit logs)
+- ✅ System-wide stats (roles)
+- ✅ Permission-aware quick links
+- ✅ Current tenant information display
+- ✅ Current user information display
+- ✅ Recent activity (last 10 audit logs)
+
+#### UI (Plain Bootstrap - Layer A Compliant)
+- ✅ dashboard/index.blade.php (NO component library!)
+- ✅ Stat cards with color-coded headers
+- ✅ Quick links grid (permission-aware)
+- ✅ Info tables (tenant & user)
+- ✅ Recent activity table (plain HTML table)
+- ✅ NO DataTables
+
+#### Middleware Protection
+- ✅ Dashboard route: auth + tenant.selected
+- ✅ Redirects to /login if not authenticated
+- ✅ Returns 404 if no tenant context
+
+**Test URL:** http://neonexadminplatform.test/t/default/dashboard  
+**Test Page:** http://neonexadminplatform.test/t/default/_test-phase6
+
+---
+
 ## 🔜 Next Phases (Layer A)
 
 ### Recommended Order:
@@ -254,7 +286,7 @@
 4. ✅ Phase 3 - Users CRUD
 5. ✅ Phase 4 - Settings System
 6. ✅ Phase 5 - Tenant Resolver
-7. 🔜 Phase 6 - Dashboard
+7. ✅ Phase 6 - Dashboard
 8. 🔜 Phase 7 - CRUD Generator
 
 ---
@@ -269,9 +301,10 @@
 - **Phase 0 Test:** http://neonexadminplatform.test/_shell
 - **Phase 1 Test:** http://neonexadminplatform.test/_test-phase1
 - **Phase 2 Test:** http://neonexadminplatform.test/_test-phase2
-- **Phase 3 Test:** http://neonexadminplatform.test/_test-phase3
-- **Phase 4 Test:** http://neonexadminplatform.test/_test-phase4
+- **Phase 3 Test:** http://neonexadminplatform.test/t/default/_test-phase3
+- **Phase 4 Test:** http://neonexadminplatform.test/t/default/_test-phase4
 - **Phase 5 Test:** http://neonexadminplatform.test/t/default/_test-phase5
+- **Phase 6 Test:** http://neonexadminplatform.test/t/default/_test-phase6
 
 ### Test Accounts
 ```bash

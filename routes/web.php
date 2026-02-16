@@ -62,12 +62,18 @@ Route::middleware(['auth', 'tenant.selected'])->group(function () {
     })->name('test.phase5');
 });
 
-// Dashboard placeholder (Phase 6)
-// Phase 5: Now requires tenant.selected middleware
+// Phase 6 Test Summary (requires tenant.selected middleware)
 Route::middleware(['auth', 'tenant.selected'])->group(function () {
-    Route::get('/dashboard', function () {
-        return redirect('/_shell');
-    })->name('dashboard');
+    Route::get('/_test-phase6', function () {
+        return view('test-phase6');
+    })->name('test.phase6');
+});
+
+// Dashboard (Phase 6)
+// Protected by: auth + tenant.selected middleware
+Route::middleware(['auth', 'tenant.selected'])->group(function () {
+    Route::get('/dashboard', [App\Http\Controllers\DashboardController::class, 'index'])
+        ->name('dashboard');
 });
 
 // Auth routes (Phase 1)
