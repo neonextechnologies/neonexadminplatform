@@ -4,9 +4,11 @@ namespace App\Providers;
 
 use App\Contracts\AuditContract;
 use App\Contracts\PermissionRegistryContract;
+use App\Contracts\TenantContract;
 use App\Services\AuditService;
 use App\Services\PermissionRegistry;
 use App\Services\SettingService;
+use App\Services\TenantService;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -33,6 +35,12 @@ class AppServiceProvider extends ServiceProvider
             return new SettingService();
         });
         $this->app->alias(SettingService::class, 'setting');
+
+        // Phase 5: Register TenantService (tenant resolver)
+        $this->app->singleton(TenantContract::class, function ($app) {
+            return new TenantService();
+        });
+        $this->app->alias(TenantContract::class, 'tenant');
     }
 
     /**

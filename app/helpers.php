@@ -65,15 +65,15 @@ if (!function_exists('tenant_id')) {
     /**
      * Get current tenant ID
      * 
-     * Phase 5: Will be implemented with TenantService
-     * Phase 0: Stub only
+     * Phase 5: Full implementation with TenantService
+     * Returns stable tenant context set by TenantMiddleware
      *
      * @return int|null
      */
     function tenant_id(): ?int
     {
-        // Stub for Phase 0 - will be implemented in Phase 5
-        return session('tenant_id');
+        // Phase 5: Use TenantService for stable context
+        return app('tenant')->id();
     }
 }
 
@@ -123,5 +123,24 @@ if (!function_exists('setting')) {
     function setting(): \App\Services\SettingService
     {
         return app('setting');
+    }
+}
+
+if (!function_exists('tenant')) {
+    /**
+     * Get tenant service instance
+     * 
+     * Phase 5: Tenant resolver and context management
+     * 
+     * Usage:
+     *   tenant()->id()  // Get current tenant ID
+     *   tenant()->current()  // Get current Tenant model
+     *   tenant()->set(1)  // Set tenant context
+     *
+     * @return \App\Contracts\TenantContract
+     */
+    function tenant(): \App\Contracts\TenantContract
+    {
+        return app('tenant');
     }
 }

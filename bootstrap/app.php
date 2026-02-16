@@ -12,8 +12,10 @@ return Application::configure(basePath: dirname(__DIR__))
     )
     ->withMiddleware(function (Middleware $middleware) {
         // Phase 2: Register permission middleware
+        // Phase 5: Register tenant middleware
         $middleware->alias([
             'permission' => \App\Http\Middleware\PermissionMiddleware::class,
+            'tenant.selected' => \App\Http\Middleware\TenantMiddleware::class,
         ]);
     })
     ->withExceptions(function (Exceptions $exceptions) {

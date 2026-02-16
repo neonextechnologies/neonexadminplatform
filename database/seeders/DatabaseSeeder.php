@@ -17,12 +17,13 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        // Phase 2-4: Kernel seeders
+        // Phase 2-5: Kernel seeders
         $this->call([
             PermissionSeeder::class,  // Phase 2: Registry-first - Register permissions
             RoleSeeder::class,         // Phase 2: Create roles + assign permissions
             UserSeeder::class,         // Phase 2: Create users + assign roles
             SettingSeeder::class,      // Phase 4: Seed default settings (audit-first)
+            TenantSeeder::class,       // Phase 5: Seed tenants + domains (audit-first)
         ]);
     }
 }

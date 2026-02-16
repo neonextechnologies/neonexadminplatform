@@ -140,4 +140,27 @@ class User extends Authenticatable
 
         $this->roles()->detach($role);
     }
+
+    /*
+    |--------------------------------------------------------------------------
+    | Phase 5: Multi-Tenancy Relations
+    |--------------------------------------------------------------------------
+    */
+
+    /**
+     * Get tenants associated with this user
+     */
+    public function tenants()
+    {
+        return $this->belongsToMany(Tenant::class, 'tenant_user')
+            ->withTimestamps();
+    }
+
+    /**
+     * Check if user has access to a specific tenant
+     */
+    public function hasTenantAccess(int $tenantId): bool
+    {
+        return $this->tenants()->where('tenant_id', $tenantId)->exists();
+    }
 }

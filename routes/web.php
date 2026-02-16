@@ -55,8 +55,16 @@ Route::middleware('auth')->group(function () {
     })->name('test.phase4');
 });
 
+// Phase 5 Test Summary (requires tenant.selected middleware)
+Route::middleware(['auth', 'tenant.selected'])->group(function () {
+    Route::get('/_test-phase5', function () {
+        return view('test-phase5');
+    })->name('test.phase5');
+});
+
 // Dashboard placeholder (Phase 6)
-Route::middleware('auth')->group(function () {
+// Phase 5: Now requires tenant.selected middleware
+Route::middleware(['auth', 'tenant.selected'])->group(function () {
     Route::get('/dashboard', function () {
         return redirect('/_shell');
     })->name('dashboard');
@@ -66,8 +74,8 @@ Route::middleware('auth')->group(function () {
 require __DIR__.'/auth.php';
 
 // Users CRUD (Phase 3)
-// Note: tenant.selected middleware will be added in Phase 5
-Route::middleware(['auth'])->prefix('users')->name('users.')->group(function () {
+// Phase 5: Now includes tenant.selected middleware
+Route::middleware(['auth', 'tenant.selected'])->prefix('users')->name('users.')->group(function () {
     // Index: requires users.view permission
     Route::get('/', [App\Http\Controllers\UserController::class, 'index'])
         ->middleware('permission:users.view')
