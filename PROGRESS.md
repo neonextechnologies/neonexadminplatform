@@ -191,15 +191,69 @@
 
 ---
 
+### Phase 5: Multi-Tenancy (Tenant Resolver) ✅
+**Status:** Complete  
+**Commit:** [1962a97] | **Tag:** v0.5.0-phase5  
+**Date:** February 16, 2026
+
+#### Database Tables
+- ✅ tenants (id, name, slug, is_active)
+- ✅ tenant_domains (tenant_id, domain, subdomain, path)
+- ✅ tenant_user (many-to-many pivot)
+
+#### Tenant Models
+- ✅ Tenant model (domains, users, settings relations)
+- ✅ TenantDomain model (resolution methods)
+- ✅ User model (added tenants() relation)
+
+#### TenantService (Full Implementation)
+- ✅ Implements TenantContract (no longer stub!)
+- ✅ id() - Get current tenant ID
+- ✅ current() - Get Tenant model
+- ✅ set($id) - Set tenant context
+- ✅ hasContext() - Check context
+- ✅ runInContext($id, $fn) - Context switching
+
+#### TenantMiddleware (Resolution Priority)
+- ✅ Priority 1: Domain match
+- ✅ Priority 2: Subdomain match
+- ✅ Priority 3: Path match (/t/tenant/...)
+- ✅ 404 if no tenant found
+- ✅ 403 if tenant inactive
+
+#### Helpers Updated (No Longer Stubs!)
+- ✅ tenant_id() - Real implementation
+- ✅ tenant() - New helper
+
+#### Middleware Applied
+- ✅ Dashboard route: auth + tenant.selected
+- ✅ Users routes: auth + tenant.selected
+- ✅ All admin routes now tenant-protected
+
+#### Seeded Tenants
+- ✅ Default Tenant (slug: default, path: /t/default)
+- ✅ Demo Tenant (slug: demo, path: /t/demo)
+- ✅ Users associated with default tenant
+
+#### Impact on Previous Phases
+- ✅ Phase 3 (Users): Now fully tenant-isolated
+- ✅ Phase 4 (Settings): Now fully tenant-isolated
+- ✅ All tenant_id() stubs replaced with real implementation
+
+**Test URL:** http://neonexadminplatform.test/t/default/_test-phase5  
+**Demo URL:** http://neonexadminplatform.test/t/demo/_test-phase5
+
+---
+
 ## 🔜 Next Phases (Layer A)
 
-### Recommended Order (Tenant-first + Registry-first):
+### Recommended Order:
 1. ✅ Phase 0 - Platform Skeleton + UI Shell
 2. ✅ Phase 1 - Authentication
 3. ✅ Phase 2 - RBAC
 4. ✅ Phase 3 - Users CRUD
 5. ✅ Phase 4 - Settings System
-6. 🔜 Phase 5 - Tenant Resolver (tenant_id() helper + middleware) - **HIGH PRIORITY**
+6. ✅ Phase 5 - Tenant Resolver
 7. 🔜 Phase 6 - Dashboard
 8. 🔜 Phase 7 - CRUD Generator
 
@@ -210,13 +264,14 @@
 ### Quick Links
 - **Login:** http://neonexadminplatform.test/login
 - **Register:** http://neonexadminplatform.test/register
-- **Dashboard:** http://neonexadminplatform.test/dashboard
-- **Users List:** http://neonexadminplatform.test/users
+- **Dashboard:** http://neonexadminplatform.test/t/default/dashboard
+- **Users List:** http://neonexadminplatform.test/t/default/users
 - **Phase 0 Test:** http://neonexadminplatform.test/_shell
 - **Phase 1 Test:** http://neonexadminplatform.test/_test-phase1
 - **Phase 2 Test:** http://neonexadminplatform.test/_test-phase2
 - **Phase 3 Test:** http://neonexadminplatform.test/_test-phase3
 - **Phase 4 Test:** http://neonexadminplatform.test/_test-phase4
+- **Phase 5 Test:** http://neonexadminplatform.test/t/default/_test-phase5
 
 ### Test Accounts
 ```bash
