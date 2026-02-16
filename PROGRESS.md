@@ -1,0 +1,227 @@
+# NeonEx Admin Platform - Development Progress
+
+**Repository:** https://github.com/neonextechnologies/neonexadminplatform  
+**Stack:** Laravel 12 + Bootstrap 5 + jQuery (No npm build!)  
+**Database:** MySQL (utf8mb4_general_ci)  
+**URL:** http://neonexadminplatform.test
+
+---
+
+## ✅ Completed Phases
+
+### Phase 0: Platform Skeleton + UI Shell ✅
+**Status:** Complete  
+**Commit:** [0d20639] Phase 0: Platform Skeleton + UI Shell
+
+#### Phase 0A: Platform Skeleton (Kernel scaffolding)
+- ✅ Kernel/Modules folder structure
+- ✅ Contracts: PermissionRegistry, Audit, Tenant, Module
+- ✅ ModuleServiceProvider (auto-discovers modules)
+- ✅ Example Module with routes/views
+- ✅ Action Router JS convention (data-action)
+- ✅ Helper functions (theme_view, theme_asset, tenant_id, has_permission)
+
+#### Phase 0B: Minimal UI Shell (Theme runs)
+- ✅ Theme config + ThemeServiceProvider
+- ✅ Theme adapter (theme_view, theme_asset, render_assets)
+- ✅ Base layouts (app.blade.php, auth.blade.php)
+- ✅ Layout partials (header, sidebar, footer, breadcrumb)
+- ✅ Bootstrap 5 CDN + minimal custom CSS
+- ✅ /_shell smoke test page
+
+**Test URL:** http://neonexadminplatform.test/_shell
+
+---
+
+### Phase 1: Authentication ✅
+**Status:** Complete  
+**Included in:** Phase 0 commit
+
+#### Features
+- ✅ Session-based Authentication (no starter kit)
+- ✅ LoginController: show, store, destroy
+- ✅ RegisterController: show, store
+- ✅ Session regeneration on login
+- ✅ Session invalidation on logout
+- ✅ CSRF protection
+
+#### Views (Plain Bootstrap - No Component Library)
+- ✅ auth/login.blade.php
+- ✅ auth/register.blade.php
+- ✅ Client-side password match validation (jQuery)
+
+#### Audit-first Implementation
+- ✅ User registration logged to storage/logs/laravel.log
+- ✅ Audit stub in RegisterController->auditUserCreation()
+- ✅ Phase 3 will replace with full AuditContract
+
+#### Test Accounts
+- **Admin:** admin@example.com / password
+- **User:** user@example.com / password
+
+**Test URL:** http://neonexadminplatform.test/_test-phase1
+
+---
+
+### Phase 2: RBAC (Registry-first + Audit-first) ✅
+**Status:** Complete  
+**Included in:** Phase 0 commit
+
+#### Database Schema
+- ✅ roles table (id, name, label, description)
+- ✅ permissions table (id, name, group, label, description)
+- ✅ role_user pivot (many-to-many)
+- ✅ permission_role pivot (many-to-many)
+
+#### Models with Relations
+- ✅ Role: permissions(), users(), givePermission(), hasPermission()
+- ✅ Permission: roles(), assignToRole()
+- ✅ User: roles(), hasRole(), canDo(), assignRole(), removeRole()
+
+#### Registry-first Implementation (Core Feature!)
+- ✅ PermissionRegistry service (implements PermissionRegistryContract)
+- ✅ Registered as singleton in AppServiceProvider
+- ✅ PermissionSeeder = SINGLE SOURCE OF TRUTH
+- ✅ All permissions MUST be registered before use
+- ✅ syncToDatabase() syncs registry to DB
+
+#### Registered Permissions (10 total)
+**Authentication Group:**
+- auth.login, auth.logout
+
+**Users Group:**
+- users.view, users.create, users.edit, users.delete
+
+**Roles Group:**
+- roles.view, roles.create, roles.edit, roles.delete
+
+#### Roles & Assignments
+- **Admin role:** 10 permissions (full access)
+- **User role:** 3 permissions (limited access)
+- **Guest role:** 2 permissions (minimal access)
+
+#### Permission Middleware
+- ✅ PermissionMiddleware registered as 'permission' alias
+- ✅ Usage: Route::middleware('permission:users.view')
+- ✅ Returns 403 for unauthorized access
+- ✅ Logs unauthorized attempts (audit-first)
+
+#### Audit-first Implementation
+- ✅ Permission registration logged
+- ✅ Role creation logged
+- ✅ Role assignment logged
+- ✅ Unauthorized access attempts logged
+- ✅ All logs in storage/logs/laravel.log
+
+**Test URL:** http://neonexadminplatform.test/_test-phase2  
+**Permission Test:** http://neonexadminplatform.test/_test-permission/{permission}
+
+---
+
+## 🔜 Next Phases (Layer A)
+
+### Recommended Order (Tenant-first + Registry-first):
+1. ✅ Phase 0 - Platform Skeleton + UI Shell
+2. ✅ Phase 1 - Authentication
+3. ✅ Phase 2 - RBAC
+4. 🔜 Phase 5 - Tenant Resolver (tenant_id() helper)
+5. 🔜 Phase 4 - Settings Service (tenant-aware)
+6. 🔜 Phase 3 - Users CRUD (tenant + permission + audit)
+7. 🔜 Phase 6 - Dashboard
+8. 🔜 Phase 7 - CRUD Generator
+
+---
+
+## 🧪 Testing
+
+### Quick Links
+- **Login:** http://neonexadminplatform.test/login
+- **Register:** http://neonexadminplatform.test/register
+- **Dashboard:** http://neonexadminplatform.test/dashboard
+- **Phase 0 Test:** http://neonexadminplatform.test/_shell
+- **Phase 1 Test:** http://neonexadminplatform.test/_test-phase1
+- **Phase 2 Test:** http://neonexadminplatform.test/_test-phase2
+
+### Test Accounts
+```bash
+# Admin (Full Access)
+Email: admin@example.com
+Password: password
+Permissions: 10 (all)
+
+# User (Limited Access)
+Email: user@example.com
+Password: password
+Permissions: 3 (auth + users.view only)
+```
+
+---
+
+## 🏗️ Architecture Highlights
+
+### Layer A Compliance ✅
+- ❌ No component library (plain Bootstrap markup only)
+- ❌ No DataTables (deferred to Phase 8 / Layer C)
+- ✅ Plain Bootstrap + jQuery action router
+- ✅ SSR Blade templates
+- ✅ CDN-first assets (no npm build)
+
+### Core Principles
+- ✅ **Registry-first:** Permissions centrally managed via PermissionRegistry
+- ✅ **Audit-first:** All CRUD operations logged
+- ✅ **Tenant-first:** Contracts ready (implementation in Phase 5)
+- ✅ **Module-first:** Pluggable architecture via ModuleServiceProvider
+
+---
+
+## 📦 Dependencies (Minimal!)
+
+### Backend
+- laravel/framework: ^12.0
+- laravel/tinker: ^2.10.1
+
+### Frontend (CDN)
+- Bootstrap 5.3.3
+- jQuery 3.6.1
+
+**Total Packages:** ~7 (vs 50+ in typical Laravel projects) ✅
+
+---
+
+## 🚀 Installation
+
+```bash
+# Clone repository
+git clone https://github.com/neonextechnologies/neonexadminplatform.git
+cd neonexadminplatform
+
+# Install dependencies
+composer install
+
+# Setup environment
+cp .env.example .env
+php artisan key:generate
+
+# Configure database in .env:
+DB_CONNECTION=mysql
+DB_DATABASE=neonexadminplatform
+DB_USERNAME=root
+DB_PASSWORD=
+
+# Create database
+mysql -uroot -e "CREATE DATABASE IF NOT EXISTS neonexadminplatform CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci;"
+
+# Run migrations + seeders
+php artisan migrate:fresh --seed
+
+# Start server (Laragon or artisan serve)
+php artisan serve
+```
+
+Visit: http://localhost:8000/_test-phase2
+
+---
+
+## 📝 License
+
+MIT License - Copyright (c) 2026 NeonEx Technologies
