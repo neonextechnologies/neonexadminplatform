@@ -156,6 +156,41 @@
 
 ---
 
+### Phase 4: Settings System (Tenant-aware) ✅
+**Status:** Complete  
+**Commit:** [e160602] | **Tag:** v0.4.0-phase4  
+**Date:** February 16, 2026
+
+#### Settings Table & Service
+- ✅ settings table (tenant_id, group, key, value, type)
+- ✅ Unique constraint: (tenant_id, group, key)
+- ✅ SettingService with cache-first pattern
+- ✅ Cache TTL: 600 seconds (10 minutes)
+- ✅ Auto-invalidation on writes
+
+#### Features
+- ✅ `setting()->get('app', 'site_name', 'Default')`
+- ✅ `setting()->set('app', 'site_name', 'New Name')`
+- ✅ `setting()->delete('app', 'key')`
+- ✅ `setting()->getGroup('app')` - entire group
+- ✅ `setting()->setMany()` - batch updates
+- ✅ Type-aware storage (string, json, int, bool, float)
+
+#### Default Settings Seeded (15 total)
+- ✅ App group (7): site_name, timezone, items_per_page, etc.
+- ✅ Theme group (3): active, primary_color, sidebar_collapsed
+- ✅ Mail group (2): from_name, from_email
+- ✅ Security group (3): password_min_length, session_lifetime, etc.
+
+#### Audit-First Logging
+- ✅ settings.updated on set()
+- ✅ settings.deleted on delete()
+- ✅ Full audit trail
+
+**Test URL:** http://neonexadminplatform.test/_test-phase4
+
+---
+
 ## 🔜 Next Phases (Layer A)
 
 ### Recommended Order (Tenant-first + Registry-first):
@@ -163,8 +198,8 @@
 2. ✅ Phase 1 - Authentication
 3. ✅ Phase 2 - RBAC
 4. ✅ Phase 3 - Users CRUD
-5. 🔜 Phase 5 - Tenant Resolver (tenant_id() helper + middleware)
-6. 🔜 Phase 4 - Settings Service (tenant-aware)
+5. ✅ Phase 4 - Settings System
+6. 🔜 Phase 5 - Tenant Resolver (tenant_id() helper + middleware) - **HIGH PRIORITY**
 7. 🔜 Phase 6 - Dashboard
 8. 🔜 Phase 7 - CRUD Generator
 
@@ -181,6 +216,7 @@
 - **Phase 1 Test:** http://neonexadminplatform.test/_test-phase1
 - **Phase 2 Test:** http://neonexadminplatform.test/_test-phase2
 - **Phase 3 Test:** http://neonexadminplatform.test/_test-phase3
+- **Phase 4 Test:** http://neonexadminplatform.test/_test-phase4
 
 ### Test Accounts
 ```bash
