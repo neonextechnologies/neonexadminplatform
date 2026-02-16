@@ -24,6 +24,7 @@ class DatabaseSeeder extends Seeder
             UserSeeder::class,         // Phase 2: Create users + assign roles
             SettingSeeder::class,      // Phase 4: Seed default settings (audit-first)
             TenantSeeder::class,       // Phase 5: Seed tenants + domains (audit-first)
+            ProductSeeder::class,      // Phase 7: Sample products for CRUD generator
         ]);
     }
 }

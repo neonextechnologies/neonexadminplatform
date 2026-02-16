@@ -69,6 +69,13 @@ Route::middleware(['auth', 'tenant.selected'])->group(function () {
     })->name('test.phase6');
 });
 
+// Phase 7 Test Summary (requires tenant.selected middleware)
+Route::middleware(['auth', 'tenant.selected'])->group(function () {
+    Route::get('/_test-phase7', function () {
+        return view('test-phase7');
+    })->name('test.phase7');
+});
+
 // Dashboard (Phase 6)
 // Protected by: auth + tenant.selected middleware
 Route::middleware(['auth', 'tenant.selected'])->group(function () {
