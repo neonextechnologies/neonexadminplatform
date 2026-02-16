@@ -1,0 +1,30 @@
+Phase 0: Platform Skeleton + UI Shell
+
+Phase 0A: Platform Skeleton (Kernel scaffolding)
+- ✅ Kernel/Modules folder structure
+- ✅ Contracts: PermissionRegistry, Audit, Tenant, Module
+- ✅ ModuleServiceProvider (auto-discovers modules)
+- ✅ Example Module with routes/views
+- ✅ Action Router JS convention (data-action)
+- ✅ Helper functions (theme_view, theme_asset, tenant_id, has_permission)
+
+Phase 0B: Minimal UI Shell (Theme runs)
+- ✅ Theme config + ThemeServiceProvider
+- ✅ Theme adapter (theme_view, theme_asset, render_assets)
+- ✅ Base layouts (app.blade.php, auth.blade.php)
+- ✅ Layout partials (header, sidebar, footer, breadcrumb)
+- ✅ Bootstrap 5 CDN + minimal custom CSS
+- ✅ /_shell smoke test page
+
+Exit Criteria:
+✅ App boots with module loader
+✅ Theme renders admin page
+✅ Bootstrap/jQuery load without npm build
+✅ Placeholder sidebar (no DB dependency)
+
+Stack:
+- Laravel 12.51.0
+- Bootstrap 5.3.3 (CDN)
+- jQuery 3.6.1 (CDN)
+- PHP 8.4.6
+- MySQL (utf8mb4_general_ci)

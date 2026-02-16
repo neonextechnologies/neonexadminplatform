@@ -1,0 +1,116 @@
+<?php
+
+namespace Database\Seeders;
+
+use App\Contracts\PermissionRegistryContract;
+use Illuminate\Database\Seeder;
+
+/**
+ * Permission Seeder
+ * 
+ * Phase 2: Registry-first + Audit-first implementation
+ * ALL permissions MUST be registered here before they can be used
+ * 
+ * This is the SINGLE SOURCE OF TRUTH for all permissions in the system
+ */
+class PermissionSeeder extends Seeder
+{
+    /**
+     * Run the database seeds.
+     */
+    public function run(): void
+    {
+        /** @var PermissionRegistryContract $registry */
+        $registry = app(PermissionRegistryContract::class);
+
+        $this->command->info('🔐 Registering permissions (Registry-first)...');
+
+        // Register all permissions (Phase 2 baseline)
+        $this->registerAuthPermissions($registry);
+        $this->registerUserPermissions($registry);
+        $this->registerRolePermissions($registry);
+        
+        // Phase 3+: Add more permission groups
+        // $this->registerSettingsPermissions($registry);
+        // $this->registerAuditPermissions($registry);
+
+        // Sync to database
+        $stats = $registry->syncToDatabase();
+
+        $this->command->info("✅ Permissions synced: {$stats['created']} created, {$stats['updated']} updated");
+
+        // Audit-first: Log permission sync
+        logger()->info('Permissions seeded', [
+            'created' => $stats['created'],
+            'updated' => $stats['updated'],
+            'total' => count($registry->all()),
+        ]);
+    }
+
+    /**
+     * Register authentication-related permissions
+     */
+    protected function registerAuthPermissions(PermissionRegistryContract $registry): void
+    {
+        $registry->registerMany([
+            'auth.login' => [
+                'group' => 'Authentication',
+                'description' => 'Can log in to the system',
+            ],
+            'auth.logout' => [
+                'group' => 'Authentication',
+                'description' => 'Can log out from the system',
+            ],
+        ]);
+    }
+
+    /**
+     * Register user management permissions
+     */
+    protected function registerUserPermissions(PermissionRegistryContract $registry): void
+    {
+        $registry->registerMany([
+            'users.view' => [
+                'group' => 'Users',
+                'description' => 'Can view users list',
+            ],
+            'users.create' => [
+                'group' => 'Users',
+                'description' => 'Can create new users',
+            ],
+            'users.edit' => [
+                'group' => 'Users',
+                'description' => 'Can edit existing users',
+            ],
+            'users.delete' => [
+                'group' => 'Users',
+                'description' => 'Can delete users',
+            ],
+        ]);
+    }
+
+    /**
+     * Register role management permissions
+     */
+    protected function registerRolePermissions(PermissionRegistryContract $registry): void
+    {
+        $registry->registerMany([
+            'roles.view' => [
+                'group' => 'Roles',
+                'description' => 'Can view roles list',
+            ],
+            'roles.create' => [
+                'group' => 'Roles',
+                'description' => 'Can create new roles',
+            ],
+            'roles.edit' => [
+                'group' => 'Roles',
+                'description' => 'Can edit existing roles',
+            ],
+            'roles.delete' => [
+                'group' => 'Roles',
+                'description' => 'Can delete roles',
+            ],
+        ]);
+    }
+}
