@@ -2,6 +2,11 @@
 
 @section('title', 'Users')
 
+@section('breadcrumb')
+    <a href="{{ route('dashboard') }}" class="breadcrumb-item">Home</a>
+    <span class="breadcrumb-item active">Users</span>
+@endsection
+
 @section('content')
 <div class="container-fluid">
     <div class="row">

@@ -34,3 +34,13 @@
 5) Output ต้องบอก Exit criteria ของ Phase นี้ว่าผ่านอะไรแล้วบ้าง
 6) ห้าม component library
 7) ต้อง registry-first + audit-first
+
+
+1.ทำเฉพาะ Phase X (Layer B) ตามเอกสารนี้ ห้ามออกนอก scope
+2.“อนุญาต” ให้เริ่มทำ component library ของ theme ได้ (เช่น <x-limitless::card>, modal, form.*) เฉพาะที่จำเป็นต่อ Phase นี้
+3.“ยังห้าม” DataTables baseline ทั้งระบบ — ใช้ได้เฉพาะแบบ per-page และเฉพาะหน้าที่จำเป็น (อย่าทำเป็น dependency หลัก) 
+4.Feature logic (routes/controllers/services/modules) ห้ามผูกกับ theme: ต้องเรียกผ่าน theme_view, theme_asset และสัญญาเดิมเท่านั้น 
+5.UI ยังยึด SSR Blade + jQuery action router (data-action) เป็นมาตรฐานเดียวทั้งระบบ 
+6.ต้อง tenant-safe + registry-first RBAC + audit-first ตามกติกาเดิม (อย่าทำสิทธิ์กระจัดกระจาย) 
+7.Output ต้องบอก Exit criteria ของ Phase นี้ว่าผ่านอะไรแล้วบ้าง (และบอกไฟล์ที่แก้/เพิ่ม)
+
